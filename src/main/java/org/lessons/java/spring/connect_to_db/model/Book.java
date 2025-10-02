@@ -115,4 +115,10 @@ public class Book {
     
 
 
+    @Override
+    public String toString(){
+
+        return String.format("%s di %s, pubblicato da %s",title,author, publisher);
+    }
+
 }

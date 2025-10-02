@@ -3,11 +3,7 @@
 <head>
     <title>Fragments</title>
 
-    <!-- Bootstrap e CSS -->
-     <th:block th:fragment="stylesCSS">
-            <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
-            <link th:rel="stylesheet" th:href="@{/css/style.css}">
-     </th:block>
+    
 </head>
 <body>
     
@@ -25,7 +21,7 @@
                         <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" th:href="@{/books}">Books</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/books/index}">Books</a>
                         </li>
                         
                         
@@ -56,9 +52,7 @@
     </main>
     <footer></footer>
 
-    <th:block th:fragment="basicScripts">
-        <script th:src="@{webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
-    </th:block>
+    
     
 </body> 
 </html>
