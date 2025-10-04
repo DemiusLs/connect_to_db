@@ -17,10 +17,15 @@
         <div class="container">
 
             <h1 class="py-4 text-center">Lista dei books</h1>
+            <div class="mb-3 d-flex flex-row-reverse">
+                
+                <a th:href="@{/books/create}" class="btn btn-primary ">Nuovo Libro</a>
 
-            <div class="col-12" th:if="${books.size() > 0}">
+            </div>
+            <div class="row">
+                <div class="col-12" th:if="${books.size() > 0}">
                   <table class="table table-striped">
-                <thead>
+                    <thead>
                     <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Author</th>
@@ -31,8 +36,8 @@
                     <th scope="col">NumberOfCopies</th>
                     
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
 
                     <tr th:each="book : ${books}" th:object="${book}">
                     <td th:text="*{title}"></td>
@@ -45,12 +50,14 @@
                     
                     </tr>
                   
-                </tbody>
-            </table>
+                    </tbody>
+                    </table>
+                </div>
+
+                <div class="col-12" th:unless="${books.size() > 0}" th:text="Non ci sono libri disponibili al momento..."></div>
+
             </div>
-
-            <div class="col-12" th:unless="${books.size() > 0}" th:text="Non ci sono libri disponibili al momento..."></div>
-
+           
           
 
         </div>
