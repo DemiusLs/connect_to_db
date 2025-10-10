@@ -34,6 +34,9 @@
                     <th scope="col">PublicationDate</th>
                     <th scope="col">Synopsis</th>
                     <th scope="col">NumberOfCopies</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                     
                     </tr>
                     </thead>
@@ -47,7 +50,17 @@
                     <td th:text="*{publicationDate}"></td>
                     <td th:text="*{synopsis}"></td>
                     <td th:text="*{numberOfCopies}"></td>
-                    
+                    <td >
+                        <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-warning">Edit</a>
+                    </td>
+                    <td >
+                        <a th:href="@{/books/{id}(id=${book.id})}" class="btn btn-primary">Det</a>
+                    </td>
+                    <td>
+                        <form action="#" th:action="@{/books/delete/{id}(id=${book.id})}" method="post">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
                     </tr>
                   
                     </tbody>

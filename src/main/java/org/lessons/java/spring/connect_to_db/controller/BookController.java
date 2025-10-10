@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -36,7 +38,7 @@ public class BookController {
         return "/books/index";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/index/{id}")
     public String show (@PathVariable("id") Integer id, Model model){
         Book book = repo.findById(id).get();
         model.addAttribute("book", book);
@@ -75,11 +77,38 @@ public class BookController {
             return "/books/create";
         }
 
-        System.out.println(formBook);
+        repo.save(formBook);
+        
+
+        return "redirect:/books/index";
+    }
+    
+
+    @GetMapping("/edit/{id}")
+    public String edit( @PathVariable("id") Integer id , Model model){
+        model.addAttribute("book", repo.findById(id).get());
+        return "/books/edit";
+
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute("book") Book formBook , BindingResult bindingResult, Model model) {
+        
+        if(bindingResult.hasErrors()){
+            return "/books/edit";
+        }
 
         repo.save(formBook);
         
 
+        return "redirect:/books/index";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        
+        repo.deleteById(id);
+        
         return "redirect:/books/index";
     }
     
