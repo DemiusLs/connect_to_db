@@ -51,10 +51,10 @@
                     <td th:text="*{synopsis}"></td>
                     <td th:text="*{numberOfCopies}"></td>
                     <td >
-                        <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-warning">Edit</a>
+                        <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
                     </td>
                     <td >
-                        <a th:href="@{/books/{id}(id=${book.id})}" class="btn btn-primary">Det</a>
+                        <a th:href="@{/books/{id}(id=${book.id})}" class="btn btn-primary btn-sm">Det</a>
                     </td>
                     <td>
                         <!-- <form action="#" th:action="@{/books/delete/{id}(id=${book.id})}" method="post">
@@ -66,11 +66,12 @@
                     Delete
                     </button>
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Conferme delete</h1>
+                            <h1 class="modal-title fs-5" id="deleteModalLabel">Conferme delete</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
