@@ -26,7 +26,7 @@ public class BorrowingController {
 
         System.out.println(formBorrowing);
         if(bindingResult.hasErrors()){
-            return "borrowings/create";
+            return "borrowings/create-or-edit";
         }
 
         repository.save(formBorrowing);

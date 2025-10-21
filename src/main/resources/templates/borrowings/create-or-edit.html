@@ -25,8 +25,8 @@
                         <input type="hidden" th:field="*{book}" id="linked-book">
 
                         <div class="mb-3">
-                            <label for="borrowingDate" class="form-label">Borrowing Date:</label>
-                            <input type="date" class="form-control" id="borrowingDate" th:field="*{borrowingDate}" th:errorClass="is-invalid">                            
+                            <label for="borrowing-Date" class="form-label">Borrowing Date:</label>
+                            <input type="date" class="form-control" id="borrowing-Date" th:field="*{borrowingDate}" th:errorClass="is-invalid" >                            
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('borrowingDate')}">
                                 <ul>
                                     <li th:each="err : ${#fields.errors('borrowingDate')}" th:text="${err}" ></li>
