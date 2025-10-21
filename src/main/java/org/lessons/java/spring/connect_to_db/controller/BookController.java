@@ -4,6 +4,7 @@ package org.lessons.java.spring.connect_to_db.controller;
 import java.util.List;
 
 import org.lessons.java.spring.connect_to_db.model.Book;
+import org.lessons.java.spring.connect_to_db.model.Borrowing;
 import org.lessons.java.spring.connect_to_db.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class BookController {
         return "/books/index";
     }
 
-    @GetMapping("/index/{id}")
+    @GetMapping("/{id}")
     public String show (@PathVariable("id") Integer id, Model model){
         Book book = repo.findById(id).get();
         model.addAttribute("book", book);
@@ -112,4 +113,14 @@ public class BookController {
         return "redirect:/books/index";
     }
     
+
+    @GetMapping("/{id}/borrow")
+    public String borrow(@PathVariable Integer id, Model model){
+
+        Borrowing borrowing = new Borrowing();
+        borrowing.setBook(repo.findById(id).get());
+        model.addAttribute("borrowing", borrowing);
+        return "borrowings/create-or-edit";
+    }
+
 }

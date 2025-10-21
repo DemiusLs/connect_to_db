@@ -37,6 +37,7 @@
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                     
                     </tr>
                     </thead>
@@ -51,6 +52,9 @@
                     <td th:text="*{synopsis}"></td>
                     <td th:text="*{numberOfCopies}"></td>
                     <td >
+                        <a th:href="@{/books/{id}/borrow(id=${book.id})}" class="btn btn-info btn-sm">Bor</a>
+                    </td>
+                    <td >
                         <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
                     </td>
                     <td >
@@ -62,12 +66,12 @@
                         </form> -->
 
                         <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="|#exampleModal${book.id}|">
                     Delete
                     </button>
 
                     <!-- modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal fade" th:id="|exampleModal${book.id}|" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header">
