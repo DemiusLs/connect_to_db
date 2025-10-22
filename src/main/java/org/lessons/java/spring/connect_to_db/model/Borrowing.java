@@ -2,8 +2,6 @@ package org.lessons.java.spring.connect_to_db.model;
 
 import java.time.LocalDate;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,11 +27,9 @@ public class Borrowing {
     private Book book;
 
     @NotNull(message = "Borrowing date cannot be null")
-    @PastOrPresent(message = "Borrowing date cannot be in the future")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)    
+    @PastOrPresent(message = "Borrowing date cannot be in the future")  
     private LocalDate borrowingDate;
     @PastOrPresent(message = "Return date cannot be in the future")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)    
     private LocalDate returnDate;
 
     @Lob

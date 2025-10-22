@@ -9,7 +9,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -25,6 +28,18 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    //prevedo l'aggiunta di una relazione tra UN LIBRO e 0,1 o PIU prestiti
+    @OneToMany(mappedBy = "book")
+    private List<Borrowing> borrowings;
+
+    @ManyToMany()
+    @JoinTable(
+        name="book_category",
+        joinColumns = @JoinColumn(name= "book_id"),
+        inverseJoinColumns = @JoinColumn(name= "category_id")
+    )
+    private List<Category> categories;
 
     @Size(min = 13 , max =13 , message = "ISBN must be made of 13 character")
     @Column(name= "isbn_code" , length = 13 , nullable = false)
@@ -51,9 +66,7 @@ public class Book {
     @Min( value =0 , message = "The number of copies must be positive" )
     private Integer numberOfCopies;
 
-    //prevedo l'aggiunta di una relazione tra UN LIBRO e 0,1 o PIU prestiti
-    @OneToMany(mappedBy = "book")
-    private List<Borrowing> borrowings;
+    
 
     public List<Borrowing> getBorrowings() {
         return this.borrowings;
@@ -61,6 +74,15 @@ public class Book {
 
     public void setBorrowings(List<Borrowing> borrowings) {
         this.borrowings = borrowings;
+    }
+
+
+    public List<Category> getCategories() {
+        return this.categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
 
