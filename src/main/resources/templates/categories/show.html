@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+
+    <th:block th:replace="~{fragments/resources :: headTags}"></th:block>
+</head>
+<body>
+
+    <th:block th:replace="~{fragments/fragments :: navigazione}"></th:block>
+    
+
+    <main>
+        <div class="container" th:object="${category}">
+            <h1>Single Category</h1>
+
+            <section class="row mb-3">
+
+                <div class="col-12">
+                    <h1 th:text="*{title}"></h1>
+                    <h2 th:text="*{author}"></h2>
+                    <h3 th:text="*{isbn}"></h3>
+                    <h4 th:text="*{publisher}"></h4>
+                    <h5 th:text="*{publicationDate}"></h5>
+                    <h5 th:text="*{numberOfCopies}"></h5>
+                    <hr/>
+                    <h5 th:text="*{synopsis}"></h5>
+                </div>
+            </section>
+
+            
+
+            <section class="row mb-3 borrowings" >
+                <div class="col-12" th:if="${book.borrowings.size() >0 }">
+                    <table class="table table-striped">
+                    <thead>
+                    <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">borrowing Date</th>
+                    <th scope="col">return Date</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col"></th>
+                    
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="borrowing : ${book.borrowings}" th:object="${borrowing}">
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{borrowingDate}"></td>
+                    <td th:text="*{returnDate}"></td>
+                    <td th:text="*{notes}"></td>
+                    <td >
+                        <a th:href="@{/borrowings/edit/{id}(id=${borrowing.id})}" class="btn btn-info btn-sm">Edit</a>
+                    </td>                                         
+                    
+
+                   
+                  
+                    </tbody>
+                    </table>
+                </div>
+                <div th:unless="${book.borrowings.size() >0 }">
+
+                    <p>Non ci sono prestiti per questo libro</p>
+
+                </div>
+            </section>       
+         
+        </div>       
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <th:block th:replace="~{fragments/resources :: scripts}"></th:block>
+</body>
+</html>

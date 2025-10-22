@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 public class BorrowingController {
 
     @Autowired
-    private BorrowingRepository repository;
+    private BorrowingRepository borrowingRepo;
     
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("borrowing") Borrowing formBorrowing,BindingResult bindingResult, Model model){
@@ -29,7 +29,7 @@ public class BorrowingController {
             return "borrowings/create-or-edit";
         }
 
-        repository.save(formBorrowing);
+        borrowingRepo.save(formBorrowing);
 
         return "redirect:/books/" + formBorrowing.getBook().getId();
 
@@ -38,7 +38,7 @@ public class BorrowingController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("borrowing", repository.findById(id).get());
+        model.addAttribute("borrowing", borrowingRepo.findById(id).get());
         model.addAttribute("edit", true);
 
         return "borrowings/create-or-edit";
@@ -51,7 +51,7 @@ public class BorrowingController {
             return "borrowings/create-or-edit";
         }
 
-        repository.save(formBorrowing);
+        borrowingRepo.save(formBorrowing);
         
 
         return "redirect:/books/index";
