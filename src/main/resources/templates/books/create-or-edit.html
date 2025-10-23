@@ -15,12 +15,12 @@
 
     <main>
         <div class="container" >
-            <h1>Create Book</h1>
+            <h1 th:field="${edit} ? |Editing book : ${book.title}| : |Creating a new book|"></h1>
             <div class="row">
 
                 <div class="col-12">
 
-                    <form th:action="@{/books/create}" method="post" id="book-form" th:object="${book}" >
+                    <form th:action="${edit} ? @{/books/edit/{id}(id=${book.id})} : @{/books/create}" method="post" id="book-form" th:object="${book}" >
 
                         <!-- <div class="mb-3" th:if="${#fields.hasErrors()}">
                             <ul class="alert alert-danger ps-5">
@@ -38,6 +38,9 @@
                                 </ul>
                             </div>
                         </div>
+
+
+                        
                         <div class="mb-3">
                             <label for="author" class="form-label">Author:</label>
                             <input type="text" class="form-control" id="author" th:field="*{author}" th:errorClass="is-invalid">
@@ -45,9 +48,18 @@
                                 <ul>
                                     <li th:each="err : ${#fields.errors('author')}" th:text="${err}" ></li>
                                 </ul>
+                            </div>                            
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="single-category form-check" th:each="category : ${categories}">
+                                <input type="checkbox" id="|category-${category.id}|" th:field="${book.categories}" th:value="${category.id}">
+                                <label for="|category-${category.id}|" class="form-label" th:text="${category.name}"></label>
                             </div>
                             
+
                         </div>
+
                         <div class="mb-3">
                             <label for="publisher" class="form-label">Publisher:</label>
                             <input type="text" class="form-control" id="publisher" th:field="*{publisher}" th:errorClass="is-invalid">
@@ -99,7 +111,7 @@
                         </div>
 
                         <div class="mb-3 d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary" value="create">Create new book</button>
+                            <button type="submit" class="btn btn-primary" value="create" th:text="${edit} ? |Update book| : |Create book|"></button>
                             <button type="reset" class="btn btn-warning" value="reset">Reset all fields</button>
                             
                         </div>

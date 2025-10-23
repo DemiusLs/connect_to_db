@@ -2,6 +2,7 @@ package org.lessons.java.spring.connect_to_db.controller;
 
 import java.util.List;
 
+import org.lessons.java.spring.connect_to_db.model.Book;
 import org.lessons.java.spring.connect_to_db.model.Category;
 import org.lessons.java.spring.connect_to_db.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class CategoryController {
         return "categories/index";
     }
 
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable Integer id, Model model){
+        model.addAttribute("category" , categoryRepo.findById(id).get());
+        return "categories/show";
+    }
 
     @GetMapping("/create")
     public String create(Model model ){
@@ -71,4 +78,17 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id){
+
+        Category categoryToRemove = categoryRepo.findById(id).get();
+
+        for(Book linkedBook : categoryToRemove.getBooks()){
+            linkedBook.getCategories().remove(categoryToRemove);
+        }
+
+        categoryRepo.delete(categoryToRemove);
+        return "redirect:/categories";
+    }
 }

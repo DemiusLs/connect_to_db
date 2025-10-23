@@ -15,7 +15,7 @@
 
     <main>
         <div class="container" >
-            <h1 th:text="${edit} ? 'editing' : 'borrowing'   "></h1>
+            <h1 th:text="${edit} ? |editing category ${category.name}| : 'Create a new category'   "></h1>
             <div class="row">
 
                 <div class="col-12">
@@ -25,7 +25,7 @@
                         <!-- <input type="hidden" th:field="*{book}" id="linked-book"> -->
 
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name:</label>
+                            <label for="name" class="form-label">Category name:</label>
                             <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid" >                            
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
                                 <ul>
