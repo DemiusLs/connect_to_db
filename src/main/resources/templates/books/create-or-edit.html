@@ -55,9 +55,7 @@
                             <div class="single-category form-check" th:each="category : ${categories}">
                                 <input type="checkbox" id="|category-${category.id}|" th:field="${book.categories}" th:value="${category.id}">
                                 <label for="|category-${category.id}|" class="form-label" th:text="${category.name}"></label>
-                            </div>
-                            
-
+                            </div>                           
                         </div>
 
                         <div class="mb-3">

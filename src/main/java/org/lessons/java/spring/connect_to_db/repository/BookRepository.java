@@ -1,7 +1,5 @@
 package org.lessons.java.spring.connect_to_db.repository;
-
 import java.util.List;
-
 import org.lessons.java.spring.connect_to_db.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 

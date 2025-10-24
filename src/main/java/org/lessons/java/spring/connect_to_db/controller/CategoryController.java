@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.lessons.java.spring.connect_to_db.model.Book;
 import org.lessons.java.spring.connect_to_db.model.Category;
-import org.lessons.java.spring.connect_to_db.repository.CategoryRepository;
+import org.lessons.java.spring.connect_to_db.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,12 +24,12 @@ import jakarta.validation.Valid;
 public class CategoryController {
 
     @Autowired
-    private CategoryRepository categoryRepo;
+    private CategoryService categoryService;
     
     @GetMapping
     public String index(Model model){
 
-        List<Category> categories = categoryRepo.findAll();
+        List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
         return "categories/index";
     }
@@ -37,7 +37,7 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model){
-        model.addAttribute("category" , categoryRepo.findById(id).get());
+        model.addAttribute("category" , categoryService.getById(id));
         return "categories/show";
     }
 
@@ -52,7 +52,7 @@ public class CategoryController {
         if(bindingResult.hasErrors()){
             return "/categories/create-or-edit";
         }
-        categoryRepo.save(categoryForm);
+        categoryService.create(categoryForm);
         return "redirect:/categories";
     }
     
@@ -62,7 +62,7 @@ public class CategoryController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id ,Model model ){
-        model.addAttribute("category" , categoryRepo.findById(id).get());
+        model.addAttribute("category" , categoryService.getById(id));
         model.addAttribute("edit", true);
         return "/categories/create-or-edit";
     }
@@ -74,7 +74,7 @@ public class CategoryController {
             return "/categories/create-or-edit";
         }
 
-        categoryRepo.save(categoryForm);
+        categoryService.update(categoryForm);
         return "redirect:/categories";
     }
 
@@ -82,13 +82,13 @@ public class CategoryController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id){
 
-        Category categoryToRemove = categoryRepo.findById(id).get();
+        Category categoryToRemove = categoryService.getById(id);
 
         for(Book linkedBook : categoryToRemove.getBooks()){
             linkedBook.getCategories().remove(categoryToRemove);
         }
 
-        categoryRepo.delete(categoryToRemove);
+        categoryService.delete(categoryToRemove);
         return "redirect:/categories";
     }
 }

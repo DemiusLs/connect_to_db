@@ -3,10 +3,12 @@ package org.lessons.java.spring.connect_to_db.controller;
 
 import java.util.List;
 
+
 import org.lessons.java.spring.connect_to_db.model.Book;
 import org.lessons.java.spring.connect_to_db.model.Borrowing;
-import org.lessons.java.spring.connect_to_db.repository.BookRepository;
-import org.lessons.java.spring.connect_to_db.repository.CategoryRepository;
+
+import org.lessons.java.spring.connect_to_db.service.BookService;
+import org.lessons.java.spring.connect_to_db.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,22 +31,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/books")
 public class BookController {
 
+    @Autowired  
+    private BookService bookService;
     @Autowired
-    private BookRepository bookRepo;
-    @Autowired
-    private CategoryRepository categoryRepo;
+    private CategoryService categoryService;
 
 
     @GetMapping("/index")
     public String index( Model model ){
-        List<Book> books = bookRepo.findAll(); //SELECT * FROM books => lista di oggetti di tipo Book
+        List<Book> books = bookService.findAll(); //SELECT * FROM books => lista di oggetti di tipo Book
         model.addAttribute("books" , books);
         return "/books/index";
     }
 
     @GetMapping("/{id}")
     public String show (@PathVariable("id") Integer id, Model model){
-        Book book = bookRepo.findById(id).get();
+        Book book = bookService.getById(id);
         model.addAttribute("book", book);
 
         return "/books/show";
@@ -53,7 +55,7 @@ public class BookController {
     @GetMapping("/searchByTitle")
     public String searchByTitle(@RequestParam(name ="title") String title, Model model){
 
-        List<Book> books = bookRepo.findByTitleContaining(title);
+        List<Book> books = bookService.findByTitle(title);
         model.addAttribute("books", books);
         return "/books/index";
     }
@@ -61,7 +63,7 @@ public class BookController {
     @GetMapping("/searchByTitleOrAuthor")
     public String searchByTitleOrAuthor(@RequestParam(name ="query") String query, Model model){
 
-        List<Book> books = bookRepo.findByTitleContainingOrAuthorContaining(query , query);
+        List<Book> books = bookService.findByTitleOrAuthor(query);
         model.addAttribute("books", books);
         return "/books/index";
     }
@@ -70,7 +72,7 @@ public class BookController {
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("book", new Book());
-        model.addAttribute("categories", categoryRepo.findAll());
+        model.addAttribute("categories", categoryService.findAll());
         return "/books/create-or-edit";
 
     }
@@ -79,11 +81,11 @@ public class BookController {
     public String store(@Valid @ModelAttribute("book") Book formBook , BindingResult bindingResult, Model model) {
         
         if(bindingResult.hasErrors()){
-            model.addAttribute("categories", categoryRepo.findAll());
+            model.addAttribute("categories", categoryService.findAll());
             return "/books/create-or-edit";
         }
 
-        bookRepo.save(formBook);
+        bookService.create(formBook);
         
 
         return "redirect:/books/index";
@@ -92,8 +94,8 @@ public class BookController {
 
     @GetMapping("/edit/{id}")
     public String edit( @PathVariable("id") Integer id , Model model){
-        model.addAttribute("book", bookRepo.findById(id).get());
-        model.addAttribute("categories", categoryRepo.findAll());
+        model.addAttribute("book", bookService.getById(id));
+        model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("edit" , true);
         return "/books/create-or-edit";
 
@@ -103,11 +105,11 @@ public class BookController {
     public String update(@Valid @ModelAttribute("book") Book formBook , BindingResult bindingResult, Model model) {
         
         if(bindingResult.hasErrors()){
-            model.addAttribute("categories", categoryRepo.findAll());
+            model.addAttribute("categories", categoryService.findAll());
             return "/books/create-or-edit";
         }
 
-        bookRepo.save(formBook);
+         bookService.update(formBook);
         
 
         return "redirect:/books/index";
@@ -116,7 +118,7 @@ public class BookController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
         
-        bookRepo.deleteById(id);
+        bookService.deleteById(id);
         
         return "redirect:/books/index";
     }
@@ -126,7 +128,7 @@ public class BookController {
     public String borrow(@PathVariable Integer id, Model model){
 
         Borrowing borrowing = new Borrowing();
-        borrowing.setBook(bookRepo.findById(id).get());
+        borrowing.setBook(bookService.getById(id));
         model.addAttribute("borrowing", borrowing);
         return "borrowings/create-or-edit";
     }

@@ -1,7 +1,7 @@
 package org.lessons.java.spring.connect_to_db.controller;
 
 import org.lessons.java.spring.connect_to_db.model.Borrowing;
-import org.lessons.java.spring.connect_to_db.repository.BorrowingRepository;
+import org.lessons.java.spring.connect_to_db.service.BorrowingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 public class BorrowingController {
 
     @Autowired
-    private BorrowingRepository borrowingRepo;
+    private BorrowingService borrowingService;
     
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("borrowing") Borrowing formBorrowing,BindingResult bindingResult, Model model){
@@ -29,7 +29,7 @@ public class BorrowingController {
             return "borrowings/create-or-edit";
         }
 
-        borrowingRepo.save(formBorrowing);
+        borrowingService.create(formBorrowing);
 
         return "redirect:/books/" + formBorrowing.getBook().getId();
 
@@ -38,7 +38,7 @@ public class BorrowingController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("borrowing", borrowingRepo.findById(id).get());
+        model.addAttribute("borrowing", borrowingService.getById(id));
         model.addAttribute("edit", true);
 
         return "borrowings/create-or-edit";
@@ -51,7 +51,7 @@ public class BorrowingController {
             return "borrowings/create-or-edit";
         }
 
-        borrowingRepo.save(formBorrowing);
+        borrowingService.update(formBorrowing);
         
 
         return "redirect:/books/index";
