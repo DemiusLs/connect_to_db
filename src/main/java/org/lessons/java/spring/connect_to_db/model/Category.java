@@ -2,6 +2,8 @@ package org.lessons.java.spring.connect_to_db.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class Category {
     private Integer id;
 
     @ManyToMany(mappedBy = "categories")
+    @JsonBackReference
     private List<Book> books;
 
     @NotBlank(message = "A category cannot exist without a proper title")

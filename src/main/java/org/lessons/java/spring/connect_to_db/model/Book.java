@@ -4,6 +4,8 @@ package org.lessons.java.spring.connect_to_db.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,7 @@ public class Book {
     
     //prevedo l'aggiunta di una relazione tra UN LIBRO e 0,1 o PIU prestiti
     @OneToMany(mappedBy = "book")
+    @JsonManagedReference
     private List<Borrowing> borrowings;
 
     @ManyToMany()
@@ -39,6 +42,7 @@ public class Book {
         joinColumns = @JoinColumn(name= "book_id"),
         inverseJoinColumns = @JoinColumn(name= "category_id")
     )
+    @JsonManagedReference
     private List<Category> categories;
 
     @Size(min = 13 , max =13 , message = "ISBN must be made of 13 character")
