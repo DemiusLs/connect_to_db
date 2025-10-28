@@ -33,7 +33,7 @@ public class Book {
     
     //prevedo l'aggiunta di una relazione tra UN LIBRO e 0,1 o PIU prestiti
     @OneToMany(mappedBy = "book")
-    @JsonManagedReference
+    // @JsonManagedReference
     private List<Borrowing> borrowings;
 
     @ManyToMany()
@@ -42,7 +42,7 @@ public class Book {
         joinColumns = @JoinColumn(name= "book_id"),
         inverseJoinColumns = @JoinColumn(name= "category_id")
     )
-    @JsonManagedReference
+    // @JsonManagedReference
     private List<Category> categories;
 
     @Size(min = 13 , max =13 , message = "ISBN must be made of 13 character")

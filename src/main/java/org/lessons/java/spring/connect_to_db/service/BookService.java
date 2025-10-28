@@ -1,6 +1,7 @@
 package org.lessons.java.spring.connect_to_db.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.lessons.java.spring.connect_to_db.model.Book;
 import org.lessons.java.spring.connect_to_db.model.Borrowing;
@@ -20,6 +21,10 @@ public class BookService {
     public List<Book> findAll(){
 
         return bookRepo.findAll();
+    }
+
+    public Optional<Book> findById(Integer id){
+        return bookRepo.findById(id);
     }
     
     public Book getById(Integer id){
