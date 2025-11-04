@@ -1,6 +1,5 @@
 package org.lessons.java.spring.connect_to_db.security;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 

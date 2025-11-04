@@ -19,7 +19,9 @@
             <h1 class="py-4 text-center">Lista dei books</h1>
             <div class="mb-3 d-flex flex-row-reverse">
                 
-                <a th:href="@{/books/create}" class="btn btn-primary ">Nuovo Libro</a>
+                <a th:href="@{/books/create}" class="btn btn-primary " sec:authorize="hasAuthority('ADMIN')">Nuovo Libro</a>
+
+                <h3 th:text="'Ciao' + ${username}"></h3>
 
             </div>
             <div class="row">
@@ -35,9 +37,9 @@
                     <th scope="col">Synopsis</th>
                     <th scope="col">NumberOfCopies</th>
                     <th scope="col"></th>
+                    <th scope="col" sec:authorize="hasAuthority('ADMIN')"></th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col" sec:authorize="hasAuthority('ADMIN')"></th>
                     
                     </tr>
                     </thead>
@@ -54,13 +56,13 @@
                     <td >
                         <a th:href="@{/books/{id}/borrow(id=${book.id})}" class="btn btn-info btn-sm">Bor</a>
                     </td>
-                    <td >
-                        <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-warning btn-sm" >Edit</a>
                     </td>
                     <td >
                         <a th:href="@{/books/{id}(id=${book.id})}" class="btn btn-primary btn-sm">Det</a>
                     </td>
-                    <td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
                         <!-- <form action="#" th:action="@{/books/delete/{id}(id=${book.id})}" method="post">
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form> -->

@@ -10,6 +10,7 @@ import org.lessons.java.spring.connect_to_db.model.Borrowing;
 import org.lessons.java.spring.connect_to_db.service.BookService;
 import org.lessons.java.spring.connect_to_db.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,9 +39,10 @@ public class BookController {
 
 
     @GetMapping("/index")
-    public String index( Model model ){
+    public String index(Authentication authentication, Model model ){
         List<Book> books = bookService.findAll(); //SELECT * FROM books => lista di oggetti di tipo Book
         model.addAttribute("books" , books);
+        model.addAttribute("username",authentication.getName());
         return "/books/index";
     }
 
